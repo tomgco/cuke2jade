@@ -12,6 +12,7 @@ module.exports.jadify = through(function (data) {
   var overall = 'passed';
 
   this.queue('div.container' + EOL);
+  queue.push('  header' + EOL);
   queue.push('  div.panel.panel-default' + EOL);
   queue.push('    div.panel-heading' + EOL);
   queue.push('      h3.{color} ' + data.keyword + ': ' + data.name + EOL); // Colour text
