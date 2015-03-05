@@ -1,0 +1,19 @@
+{
+  "name": "cuke2jade",
+  "version": "1.0.0",
+  "description": "Convert cucumber.js json output to jade",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tom Gallacher <tomgallacher23@gmail.com> (tomgco)",
+  "license": "ISC",
+  "bin": {
+    "cuke2jade": "./bin/cuke2jade.js"
+  },
+  "dependencies": {
+    "JSONStream": "^0.10.0",
+    "event-stream": "^3.2.2",
+    "through": "^2.3.6"
+  }
+}
