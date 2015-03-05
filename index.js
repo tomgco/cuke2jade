@@ -1,19 +1,38 @@
 var through = require('through');
 var EOL = '\n';
 
+var LOOKUP = {
+  'passed': 'text-success',
+  'failed': 'text-danger',
+  'undefined': 'text-warning'
+};
+
+
 module.exports.jadify = through(function (data) {
-  this.queue('div.panel.panel-default' + EOL);
-  this.queue('  div.panel-heading' + EOL);
-  this.queue('    h3 ' + data.keyword + ': ' + data.name + EOL); // Colour text
-  this.queue('  div.panel-body ' + data.description + EOL);
+  var queue = [];
+  var overall = 'passed';
+
+  queue.push('div.panel.panel-default' + EOL);
+  queue.push('  div.panel-heading' + EOL);
+  queue.push('    h3.{color} ' + data.keyword + ': ' + data.name + EOL); // Colour text
+  queue.push('  div.panel-body ' + data.description + EOL);
   data.elements.forEach(function (el) {
-  this.queue('    div.row' + EOL);
-  this.queue('      div.col-sm-offset-2.col-sm-10' + EOL);
-  this.queue('        h3 ' + el.keyword + ': ' + el.name + EOL);
+  queue.push('    div.row' + EOL);
+  queue.push('      div.col-sm-offset-2.col-sm-10' + EOL);
+  queue.push('        h3 ' + el.keyword + ': ' + el.name + EOL);
   el.steps.forEach(function (step) {
-  this.queue('      div.col-sm-offset-4.col-sm-10' + EOL);
-  this.queue('        h4.' + ((step.result.status === 'passed') ? 'green' : 'red') + ' ' + step.keyword + step.name + EOL);
+  queue.push('      div.col-sm-offset-4.col-sm-10' + EOL);
+  queue.push('        h4.' + LOOKUP[step.result.status] + ' ' + step.keyword + step.name + EOL);
+    if (step.result.status === 'undefined' && overall !== 'failed') {
+      overall = 'undefined';
+    } else if (step.result.status === 'failed') {
+      overall = 'failed';
+    }
+  });
+  });
+  queue.push(EOL);
+
+  queue.forEach(function (item) {
+    this.queue(item.replace('{color}', LOOKUP[overall]));
   }.bind(this));
-  }.bind(this));
-  this.queue(EOL);
 });
