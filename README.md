@@ -5,7 +5,7 @@ Cucumber.js json formatted output to [jade](http://jade-lang.com).
 
 ## Installation and Usage
 
-![Install and Usage](assets/cuke.gif)
+![Install and Usage](https://raw.githubusercontent.com/tomgco/cuke2jade/master/assets/cuke.gif)
 
 ## Install
 
