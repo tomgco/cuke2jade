@@ -13,25 +13,30 @@ module.exports = function (opts) {
       var queue = [];
       var overall = 'passed';
       if (opts.header) {
-      queue.push('header ' + opts.header + EOL);
+        queue.push('header.row' + EOL);
+        queue.push('  h1.col-md-offset-1.col-md-11 ' + opts.header + EOL);
       }
-      queue.push('div.panel.panel-default' + EOL);
-      queue.push('  div.panel-heading' + EOL);
-      queue.push('    h3.{color} ' + data.keyword + ': ' + data.name + EOL); // Colour text
-      queue.push('  div.panel-body ' + data.description + EOL);
+      queue.push('section' + EOL);
+      queue.push('  div.row' + EOL);
+      queue.push('    div.col-md-offset-1.col-md-10' + EOL);
+      queue.push('      article.col-md-offset-1.col-md-10' + EOL);
+      queue.push('        div.panel.panel-default' + EOL);
+      queue.push('          div.panel-heading' + EOL);
+      queue.push('            h4 ' + data.keyword + ': ' + data.name + EOL);
+      queue.push('          div.panel-body ' + data.description + EOL);
       data.elements.forEach(function (el) {
-      queue.push('    div.row' + EOL);
-      queue.push('      div.col-sm-offset-2.col-sm-10' + EOL);
-      queue.push('        h3 ' + el.keyword + ': ' + el.name + EOL);
-      el.steps.forEach(function (step) {
-      queue.push('      div.col-sm-offset-4.col-sm-10' + EOL);
-      queue.push('        h4.' + LOOKUP[step.result.status] + ' ' + step.keyword + step.name + EOL);
-        if (step.result.status === 'undefined' && overall !== 'failed') {
-          overall = 'undefined';
-        } else if (step.result.status === 'failed') {
-          overall = 'failed';
-        }
-      });
+        queue.push('            article.row' + EOL);
+        queue.push('              h4.col-md-12 ' + el.keyword + ': ' + el.name + EOL);
+        el.steps.forEach(function (step) {
+          queue.push('              div.col-sm-offset-3.col-sm-9' + EOL);
+          queue.push('                h5.' + LOOKUP[step.result.status] + ' ' + step.keyword + step.name + EOL);
+            if (step.result.status === 'undefined' && overall !== 'failed') {
+              overall = 'undefined';
+            } else if (step.result.status === 'failed') {
+              overall = 'failed';
+            }
+          });
+        queue.push('            hr' + EOL);
       });
       queue.push(EOL);
 
@@ -40,6 +45,4 @@ module.exports = function (opts) {
       }.bind(this));
     })
   };
-}
-
-;
+};
