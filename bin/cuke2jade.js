@@ -6,7 +6,7 @@ var JSONStream = require('JSONStream');
 var argv = require('argh').argv;
 
 if (argv.bootstrap || argv.bootstrap === undefined) {
-  process.stdout.write('link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")\n');
+  process.stdout.write('link(rel="stylesheet" href="http://bootswatch.com/paper/bootstrap.css")\n');
 }
 
 if (argv.css) {
