@@ -24,7 +24,7 @@ module.exports = function (opts) {
       queue.push('          div.panel-heading' + EOL);
       queue.push('            h4.{color} ' + data.keyword + ': ' + data.name + EOL);
       queue.push('          div.panel-body ' + data.description + EOL);
-      data.elements.forEach(function (el) {
+      data.elements.forEach(function (el, index, array) {
       queue.push('            article.row' + EOL);
       queue.push('              h4.col-md-12 ' + el.keyword + ': ' + el.name + EOL);
       el.steps.forEach(function (step) {
@@ -36,7 +36,9 @@ module.exports = function (opts) {
             overall = 'failed';
           }
         });
-      queue.push('            hr' + EOL);
+      if (index !== array.length - 1) {
+      queue.push('            hr' + EOL); 
+      }
       });
       queue.push(EOL);
 
