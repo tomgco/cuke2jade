@@ -1,6 +1,6 @@
 {
   "name": "cuke2jade",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Convert cucumber.js json output to jade",
   "main": "index.js",
   "scripts": {
