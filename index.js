@@ -10,12 +10,16 @@ var LOOKUP = {
 module.exports = function (opts) {
   if (opts.header) {
     process.stdout.write('header.row' + EOL);
-    process.stdout.write('  h1.col-md-offset-1.col-md-11 ' + opts.header + EOL);
+    process.stdout.write('  h1.col-md-offset-2.col-md-10 ' + opts.header + EOL);
   }
   return {
     jadify: through(function (data) {
       var queue = [];
       var overall = 'passed';
+      if (opts.header) {
+        queue.push('header.row' + EOL);
+        queue.push('  h1.col-md-offset-2.col-md-10 ' + opts.header + EOL);
+      }
       queue.push('section' + EOL);
       queue.push('  div.row' + EOL);
       queue.push('    div.col-md-offset-1.col-md-10' + EOL);
@@ -37,7 +41,7 @@ module.exports = function (opts) {
           }
         });
       if (index !== array.length - 1) {
-      queue.push('            hr' + EOL); 
+      queue.push('            hr' + EOL);
       }
       });
       queue.push(EOL);
