@@ -17,5 +17,5 @@ if (argv.css) {
 
 process.stdin
   .pipe(JSONStream.parse('*'))
-  .pipe(cukeme.jadify)
+  .pipe(cukeme(argv).jadify)
   .pipe(process.stdout);
