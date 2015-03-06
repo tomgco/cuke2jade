@@ -16,10 +16,6 @@ module.exports = function (opts) {
     jadify: through(function (data) {
       var queue = [];
       var overall = 'passed';
-      if (opts.header) {
-        queue.push('header.row' + EOL);
-        queue.push('  h1.col-md-offset-2.col-md-10 ' + opts.header + EOL);
-      }
       queue.push('section' + EOL);
       queue.push('  div.row' + EOL);
       queue.push('    div.col-md-offset-1.col-md-10' + EOL);
@@ -32,8 +28,8 @@ module.exports = function (opts) {
       queue.push('            article.row' + EOL);
       queue.push('              h4.col-md-12 ' + el.keyword + ': ' + el.name + EOL);
       el.steps.forEach(function (step) {
-        queue.push('              div.col-sm-offset-3.col-sm-9' + EOL);
-        queue.push('                h5.' + LOOKUP[step.result.status] + ' ' + step.keyword + step.name + EOL);
+      queue.push('              div.col-sm-offset-3.col-sm-9' + EOL);
+      queue.push('                h5.' + LOOKUP[step.result.status] + ' ' + step.keyword + step.name + EOL);
           if (step.result.status === 'undefined' && overall !== 'failed') {
             overall = 'undefined';
           } else if (step.result.status === 'failed') {
