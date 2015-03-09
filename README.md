@@ -49,3 +49,11 @@ $ cat cucumber.json | cuke2jade --css bootstrap-override.css # custom css overri
 ```sh
 $ cat cucumber.json | cuke2jade --header
 ```
+
+#### Progress Bar
+
+`--progress` Will add a progress bar to the top of your report to indicate the total progress (number of passes, undefined tests, failing tests and skipped tests).
+
+```sh
+$ cat cucumber.json | cuke2jade --progress
+```
