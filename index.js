@@ -5,7 +5,7 @@ var LOOKUP = {
   'passed': 'text-success',
   'failed': 'text-danger',
   'undefined': 'text-warning',
-  'skipped': 'text-primary'
+  'skipped': 'text-muted'
 };
 
 module.exports = function (opts) {
@@ -61,9 +61,9 @@ module.exports = function (opts) {
       this.queue('mixin progress' + EOL);
       this.queue('  .progress' + EOL);
       this.queue('    .progress-bar.progress-bar-success(style="width: ' + (progress.passed / total) * 100 + '%")' + EOL);
-      this.queue('    .progress-bar.progress-bar-warning(style="width: ' + (progress.undefined / total) * 100 + '%")' + EOL);
       this.queue('    .progress-bar.progress-bar-danger(style="width: ' + (progress.failed / total) * 100 + '%")' + EOL);
-      this.queue('    .progress-bar.progress-bar-primary(style="width: ' + (progress.skipped / total) * 100 + '%")' + EOL);
+      this.queue('    .progress-bar.progress-bar-warning(style="width: ' + (progress.undefined / total) * 100 + '%")' + EOL);
+      this.queue('    .progress-bar.progress-bar-info(style="width: ' + (progress.skipped / total) * 100 + '%")' + EOL);
       if (opts.progress) {
         this.queue('+progress' + EOL);
       }
