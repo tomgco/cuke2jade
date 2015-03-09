@@ -41,3 +41,11 @@ $ cat cucumber.json | cuke2jade --no-bootstrap # no stylesheet
 $ cat cucumber.json | cuke2jade --no-bootstrap --css custom-bootstrap.css # custom css with no defaults
 $ cat cucumber.json | cuke2jade --css bootstrap-override.css # custom css overriding bootstrap.css
 ```
+
+#### Custom Header
+
+`--header "Some String with Spaces in"` Will be placed at the top of your report.
+
+```sh
+$ cat cucumber.json | cuke2jade --header
+```
