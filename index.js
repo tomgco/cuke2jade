@@ -4,18 +4,24 @@ var EOL = '\n';
 var LOOKUP = {
   'passed': 'text-success',
   'failed': 'text-danger',
-  'undefined': 'text-warning'
+  'undefined': 'text-warning',
+  'skipped': 'text-muted'
 };
 
 module.exports = function (opts) {
-  if (opts.header) {
-    process.stdout.write('header.row' + EOL);
-    process.stdout.write('  h1.col-md-offset-2.col-md-10 ' + opts.header + EOL);
-  }
+  // We need to buffer =[
+  var queue = [];
+  var overall = [];
+
+  var progress = {
+    passed: 0,
+    failed: 0,
+    undefined: 0,
+    skipped: 0
+  };
   return {
     jadify: through(function (data) {
-      var queue = [];
-      var overall = 'passed';
+      var group = '';
       queue.push('section' + EOL);
       queue.push('  div.row' + EOL);
       queue.push('    div.col-md-offset-1.col-md-10' + EOL);
@@ -33,20 +39,40 @@ module.exports = function (opts) {
       el.steps.forEach(function (step) {
       queue.push('              div.col-sm-offset-3.col-sm-9' + EOL);
       queue.push('                h5.' + LOOKUP[step.result.status] + ' ' + step.keyword + step.name + EOL);
-          if (step.result.status === 'undefined' && overall !== 'failed') {
-            overall = 'undefined';
-          } else if (step.result.status === 'failed') {
-            overall = 'failed';
-          }
-        });
+        progress[step.result.status]++;
+        if (step.result.status === 'undefined' && group !== 'failed') {
+          group = 'undefined';
+        } else if (step.result.status === 'failed') {
+          group = 'failed';
+        } else if (step.result.status === 'skipped' && group !== 'undefined') {
+          group = 'skipped';
+        }
+      });
       if (index !== array.length - 1) {
       queue.push('            hr' + EOL);
       }
+      overall.push(group);
       });
       queue.push(EOL);
-
+    }, function () {
+      var total = Object.keys(progress).reduce(function (prev, curr) {
+        return prev + progress[curr];
+      }, 0);
+      this.queue('mixin progress' + EOL);
+      this.queue('  .progress' + EOL);
+      this.queue('    .progress-bar.progress-bar-success(style="width: ' + (progress.passed / total) * 100 + '%")' + EOL);
+      this.queue('    .progress-bar.progress-bar-danger(style="width: ' + (progress.failed / total) * 100 + '%")' + EOL);
+      this.queue('    .progress-bar.progress-bar-warning(style="width: ' + (progress.undefined / total) * 100 + '%")' + EOL);
+      this.queue('    .progress-bar.progress-bar-info(style="width: ' + (progress.skipped / total) * 100 + '%")' + EOL);
+      if (opts.progress) {
+        this.queue('+progress' + EOL);
+      }
+      if (opts.header) {
+        this.queue('header.row' + EOL);
+        this.queue('  h1.col-md-offset-2.col-md-10 ' + opts.header + EOL);
+      }
       queue.forEach(function (item) {
-        this.queue(item.replace('{color}', LOOKUP[overall]));
+        this.queue(item.replace('{color}', LOOKUP[overall.shift()]));
       }.bind(this));
     })
   };
