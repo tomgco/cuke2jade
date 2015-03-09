@@ -22,8 +22,12 @@ module.exports = function (opts) {
       queue.push('      article.col-md-offset-1.col-md-10' + EOL);
       queue.push('        div.panel.panel-default' + EOL);
       queue.push('          div.panel-heading' + EOL);
-      queue.push('            h4.{color} ' + data.keyword + ': ' + data.name + EOL);
-      queue.push('          div.panel-body ' + data.description + EOL);
+      queue.push('            a(href="'+data.id+'")' + EOL);
+      queue.push('              h4.{color}#' + data.id + ' ' + data.keyword + ': ' + data.name + EOL);
+      if (data.description) {
+      queue.push('            p.h6 ' + data.description + EOL);
+      }
+      queue.push('          div.panel-body ' + EOL);
       data.elements.forEach(function (el, index, array) {
       queue.push('            article.row' + EOL);
       queue.push('              h4.col-md-12 ' + el.keyword + ': ' + el.name + EOL);
