@@ -70,7 +70,7 @@ module.exports = function (opts) {
       }
       if (opts.header) {
         this.queue('header.row' + EOL);
-        this.queue('  h1.col-md-offset-2.col-md-10 ' + opts.header + EOL);
+        this.queue('  h1.col-md-offset-1.col-md-11 ' + opts.header + EOL);
       }
       queue.forEach(function (item) {
         this.queue(item.replace('{color}', LOOKUP[overall.shift()]));
