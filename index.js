@@ -21,27 +21,27 @@ module.exports = function (opts) {
   };
   return {
     jadify: through(function (data) {
-      var group = 'passed';
       queue.push('  div.col-md-6' + EOL);
       queue.push('    div.panel.panel-default' + EOL);
       queue.push('      div.panel-heading' + EOL);
-      queue.push('        a(href="#'+data.id+'")' + EOL);
+      queue.push('        a(href="#' + data.id + '")' + EOL);
       queue.push('          h4#' + data.id + ' ' + data.name + EOL);
       queue.push('      div.panel-body ' + EOL);
-      data.elements.forEach(function (el, index, array) {
+      data.elements.forEach(function (el) {
       queue.push('        h4.{color}.col-md-12 ' + el.name + EOL);
+      var group = 'passed';
       el.steps.forEach(function (step) {
         progress[step.result.status]++;
         if (step.result.status === 'failed' || group === 'failed') {
           group = 'failed';
           return;
         }
-        
+
         if (step.result.status === 'skipped' || group === 'undefined') {
           group = 'undefined';
           return;
         }
-        
+
         if (step.result.status === 'undefined' || group === 'undefined') {
           group = 'undefined';
           return;
