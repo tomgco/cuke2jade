@@ -5,7 +5,8 @@ var LOOKUP = {
   'passed': 'text-success',
   'failed': 'text-danger',
   'undefined': 'text-warning',
-  'skipped': 'text-warning'
+  'skipped': 'text-warning',
+  'pending': 'text-warning'
 };
 
 module.exports = function (opts) {
@@ -17,7 +18,8 @@ module.exports = function (opts) {
     passed: 0,
     failed: 0,
     undefined: 0,
-    skipped: 0
+    skipped: 0,
+    pending: 0
   };
   return {
     jadify: through(function (data) {
@@ -60,10 +62,11 @@ module.exports = function (opts) {
       }, 0);
       this.queue('mixin progress' + EOL);
       this.queue('  .progress' + EOL);
-      this.queue('    .progress-bar.progress-bar-success(style="width: ' + (progress.passed / total) * 100 + '%")' + EOL);
-      this.queue('    .progress-bar.progress-bar-danger(style="width: ' + (progress.failed / total) * 100 + '%")' + EOL);
-      this.queue('    .progress-bar.progress-bar-warning(style="width: ' + (progress.undefined / total) * 100 + '%")' + EOL);
-      this.queue('    .progress-bar.progress-bar-warning(style="width: ' + (progress.skipped / total) * 100 + '%")' + EOL);
+      this.queue('    .progress-bar.progress-bar-success(style="width: ' + (progress.passed / total || 0) * 100 + '%")' + EOL);
+      this.queue('    .progress-bar.progress-bar-danger(style="width: ' + (progress.failed / total || 0) * 100 + '%")' + EOL);
+      this.queue('    .progress-bar.progress-bar-warning(style="width: ' + (progress.undefined / total || 0) * 100 + '%")' + EOL);
+      this.queue('    .progress-bar.progress-bar-warning(style="width: ' + (progress.skipped / total || 0) * 100 + '%")' + EOL);
+      this.queue('    .progress-bar.progress-bar-warning(style="width: ' + (progress.pending / total || 0) * 100 + '%")' + EOL);
       if (opts.progress) {
         this.queue('+progress' + EOL);
       }
