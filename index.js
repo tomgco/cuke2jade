@@ -48,6 +48,11 @@ module.exports = function (opts) {
           group = 'undefined';
           return;
         }
+
+        if (step.result.status === 'pending' || group === 'undefined') {
+          group = 'undefined';
+          return;
+        }
       });
       overall.push(group);
       });
